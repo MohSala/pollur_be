@@ -1,0 +1,46 @@
+{
+  "name": "prod-test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "axios": "0.19.2",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "1.19.0",
+    "dotenv": "8.2.0",
+    "express": "4.17.1",
+    "express-validator": "^6.4.0",
+    "helmet": "^3.22.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "5.8.1",
+    "redis": "2.8.0",
+    "validator": "^13.0.0",
+    "winston": "3.2.1",
+    "winston-daily-rotate-file": "4.4.0"
+  },
+  "devDependencies": {
+    "@types/express": "4.17.2",
+    "@types/mocha": "5.2.7",
+    "@types/mongodb": "3.3.16",
+    "@types/mongoose": "5.7.1",
+    "chai": "4.2.0",
+    "chai-http": "4.3.0",
+    "mocha": "6.2.2",
+    "tslint": "5.20.1",
+    "typescript": "3.7.3"
+  },
+  "scripts": {
+    "watch": "tsc -watch",
+    "start": "tsc && node dist/app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wordaddict/API-project.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wordaddict/API-project/issues"
+  },
+  "homepage": "https://github.com/wordaddict/API-project#readme"
+}
