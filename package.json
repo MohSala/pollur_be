@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
+    "@types/node": "^13.13.2",
     "axios": "0.19.2",
     "bcryptjs": "^2.4.3",
     "body-parser": "1.19.0",
@@ -28,7 +29,7 @@
     "chai-http": "4.3.0",
     "mocha": "6.2.2",
     "tslint": "5.20.1",
-    "typescript": "3.7.3"
+    "typescript": "^3.7.3"
   },
   "scripts": {
     "watch": "tsc -watch",
