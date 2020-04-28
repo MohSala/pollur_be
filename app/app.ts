@@ -1,5 +1,5 @@
 import express from 'express';
-
+import cors from "cors"
 import { userRouter } from './routes/user';
 import { config } from './config/config';
 // service locator via dependency injection
@@ -10,7 +10,7 @@ const port = config.server.port;
 
 app.use('/', userRouter);
 app.use(helmet());
-
+app.use(cors());
 app.get('/', (req, res) => {
   res.send(`Welcome to ${config.appName}!`);
 });
