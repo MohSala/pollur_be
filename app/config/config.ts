@@ -19,8 +19,11 @@ export const config = {
       dbProd: process.env.MONGODB_DATABASE_NAME
     },
     collections: {
-      users: 'users'
+      users: 'users',
+      polls: 'polls',
+      candidates: 'candidates'
     },
+
     queryLimit: process.env.MONGODB_QUERY_LIMIT,
     questionLimit: process.env.QUESTION_LIMIT
   },
@@ -36,7 +39,18 @@ export const config = {
     api: process.env.PAYSTACK_API,
     key: process.env.PAYSTACK_API_KEY
   },
-  secretKey: process.env.JWT_SECRET_KEY
+  secretKey: process.env.JWT_SECRET_KEY,
+  cloudinary: {
+    cloud_name: process.env.CLOUDINARY_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET
+  },
+  aws: {
+    access_key: process.env.AWS_ACCESS_KEY,
+    secret_access_key: process.env.AWS_SECRET_ACCESS_KEY,
+    region: process.env.AWS_REGION,
+    bucket: process.env.AWS_BUCKET
+  },
 
 };
 

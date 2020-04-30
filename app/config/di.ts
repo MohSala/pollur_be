@@ -8,7 +8,9 @@ require('winston-daily-rotate-file');
 
 // user services and controllers
 import { UserServices } from '../services/user';
+import { PollServices } from '../services/poll';
 import { UserController } from '../controllers/user';
+import { PollController } from '../controllers/poll';
 
 
 const mongoose = require('mongoose');
@@ -77,6 +79,13 @@ serviceLocator.register('userService', (servicelocator) => {
 });
 
 
+serviceLocator.register('pollService', (servicelocator) => {
+  const logger = servicelocator.get('logger');
+  const mongoclient = servicelocator.get('mongo');
+  return new PollServices(logger, mongoclient);
+});
+
+
 /**
  * Creates an instance of the user Controller
  */
@@ -85,6 +94,14 @@ serviceLocator.register('userController', (servicelocator) => {
   const userService = servicelocator.get('userService');
   return new UserController(
     logger, userService
+  );
+});
+
+serviceLocator.register('pollController', (servicelocator) => {
+  const logger = servicelocator.get('logger');
+  const pollService = servicelocator.get('pollService');
+  return new PollController(
+    logger, pollService
   );
 });
 

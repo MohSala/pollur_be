@@ -10,7 +10,6 @@ const port = config.server.port;
 app.use(cors());
 app.use('/', userRouter);
 app.use(helmet());
-
 app.get('/', (req, res) => {
   res.send(`Welcome to ${config.appName}!`);
 });

@@ -1,8 +1,10 @@
 import { success, failure } from '../lib/response_manager';
 import { HTTPStatus } from '../constants/http_status';
-const bcrypt = require("bcryptjs")
-const jwt = require("jsonwebtoken")
+const bcrypt = require("bcryptjs");
+const upload = require("../services/imageUpload")
+const jwt = require("jsonwebtoken");
 import { config } from "../config/config"
+import { CandidatePayload } from '../model/candidate';
 
 
 
@@ -111,4 +113,57 @@ export class UserController {
             }, HTTPStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    async addCandidate(req: any, res: any) {
+        // set MAximim amnt of candidate later
+        const { name, party, pollId, color } = req.body;
+        if (!name || !pollId || !color) {
+            return failure(res, {
+                message: 'Please fill in missing all missing fields',
+            }, HTTPStatus.BAD_REQUEST);
+        }
+        try {
+            const param = {
+                name, party, pollId, color
+            }
+            const data: CandidatePayload = await this.userService.addCandidate(param);
+            return success(res, {
+                message: `Candidate Created Successfully`,
+                response: data,
+            }, HTTPStatus.OK);
+
+        } catch (error) {
+            this.logger.info("Error Occured during candidate creation ", error)
+            return failure(res, {
+                message: 'Sorry an internal server error occured during candidate creation',
+            }, HTTPStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    async loadCandidates(req: any, res: any) {
+        const { id } = req.query;
+        if (!id) {
+            return failure(res, {
+                message: 'Please add poll Id',
+            }, HTTPStatus.BAD_REQUEST);
+        }
+        try {
+            const data: CandidatePayload = await this.userService.loadCandidates(id);
+            if (!data) {
+                return failure(res, {
+                    message: 'No candidates Found',
+                }, HTTPStatus.NOT_FOUND);
+            }
+            return success(res, {
+                message: `Candidate Records returned Successfully`,
+                response: data,
+            }, HTTPStatus.OK);
+        } catch (error) {
+            this.logger.info("Error Occured during candidate retrieval ", error)
+            return failure(res, {
+                message: 'Sorry an internal server error occured during candidate retrieval',
+            }, HTTPStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 };

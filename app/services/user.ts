@@ -1,4 +1,5 @@
 import { userModel } from '../model/user';
+import { CandidatePayload, candidateModel } from '../model/candidate'
 import { config } from '../config/config';
 import axios from 'axios';
 export class UserServices {
@@ -31,5 +32,20 @@ export class UserServices {
             mobile,
         })
         return newUserRecord.save();
+    }
+
+    public async addCandidate(param: CandidatePayload) {
+        const { color, name, party, pollId } = param;
+        const newCandidate = new candidateModel({
+            color,
+            name,
+            party,
+            pollId
+        })
+        return newCandidate.save();
+    }
+
+    public async loadCandidates(id: string) {
+        return candidateModel.find({ pollId: id }).exec();
     }
 };
