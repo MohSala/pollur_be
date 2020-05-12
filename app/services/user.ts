@@ -1,5 +1,6 @@
 import { userModel } from '../model/user';
 import { CandidatePayload, candidateModel } from '../model/candidate'
+import { messageModel, MessagePayload } from "../model/message"
 import { config } from '../config/config';
 import axios from 'axios';
 export class UserServices {
@@ -45,7 +46,18 @@ export class UserServices {
         return newCandidate.save();
     }
 
+    public async findCandidate(name: string, pollId: string) {
+        return candidateModel.findOne({ name, pollId }).exec();
+    }
+
     public async loadCandidates(id: string) {
         return candidateModel.find({ pollId: id }).exec();
+    }
+
+    public async takeMessage(message: MessagePayload) {
+        const newMessage = new messageModel({
+            message
+        })
+        return newMessage.save();
     }
 };

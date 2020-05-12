@@ -21,7 +21,9 @@ export const config = {
     collections: {
       users: 'users',
       polls: 'polls',
-      candidates: 'candidates'
+      candidates: 'candidates',
+      votes: 'votes',
+      messages: 'messages'
     },
 
     queryLimit: process.env.MONGODB_QUERY_LIMIT,

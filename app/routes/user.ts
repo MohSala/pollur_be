@@ -40,3 +40,34 @@ userRouter.get('/myPolls',
 	(req, res) => {
 		return pollController.viewMyPolls(req, res)
 	})
+
+userRouter.get('/polls',
+	(req, res) => {
+		return pollController.viewAllPolls(req, res)
+	})
+
+/**
+ * THE MAGIC IS HERE
+ * 
+ */
+userRouter.post('/vote',
+	(req, res) => {
+		return pollController.registerAVote(req, res)
+	})
+
+userRouter.get('/getCandidate',
+	(req, res) => {
+		return pollController.checkForACandidate(req, res)
+	})
+
+userRouter.get('/votes',
+	(req, res) => {
+		return pollController.getVotes(req, res)
+	})
+
+userRouter.post('/delete',
+	(req, res) => {
+		return pollController.removePolls(req, res)
+	})
+
+

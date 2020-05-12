@@ -5,7 +5,8 @@ const upload = require("../services/imageUpload")
 const jwt = require("jsonwebtoken");
 import { config } from "../config/config"
 import { CandidatePayload } from '../model/candidate';
-
+import { UserPayload } from '../model/user';
+import { MessagePayload } from "../model/message"
 
 
 export class UserController {
@@ -29,9 +30,10 @@ export class UserController {
                 HTTPStatus.BAD_REQUEST);
         }
         // handle validation laater
-        const existingUserRecord = await this.userService.findUser(mobile);
-        if (existingUserRecord != null) {
-            return failure(res, { message: 'This Merchant already exists' },
+        const existingUserRecordByMobile: UserPayload = await this.userService.findUser(mobile);
+        const existingRecordByEmail: UserPayload = await this.userService.findOne(email);
+        if (existingRecordByEmail || existingUserRecordByMobile) {
+            return failure(res, { message: 'This User already exists' },
                 HTTPStatus.BAD_REQUEST);
         }
         try {
@@ -43,7 +45,7 @@ export class UserController {
                 const salt: String = await bcrypt.genSalt(10);
                 const hash: String = await bcrypt.hash(param.password, salt)
                 param.password = hash
-                const data = await this.userService.saveNewUser(param)
+                const data: UserPayload = await this.userService.saveNewUser(param)
                 // Generate code and add to cache
                 // let code = Math.floor(Math.random() * 90000) + 10000;
                 // will use this later after all is set
@@ -56,7 +58,7 @@ export class UserController {
                 const token = await jwt.sign(payload, config.secretKey, { expiresIn: '14d' })
 
                 return success(res, {
-                    message: `Merchant Created Successfully`,
+                    message: `User Created Successfully`,
                     response: { user: data, token },
                 }, HTTPStatus.OK);
             } catch (error) {
@@ -116,13 +118,20 @@ export class UserController {
 
     async addCandidate(req: any, res: any) {
         // set MAximim amnt of candidate later
-        const { name, party, pollId, color } = req.body;
+        let { name, party, pollId, color } = req.body;
+        name = name.toLowerCase();
         if (!name || !pollId || !color) {
             return failure(res, {
                 message: 'Please fill in missing all missing fields',
             }, HTTPStatus.BAD_REQUEST);
         }
         try {
+            const findCandidate: CandidatePayload = await this.userService.findCandidate(name, pollId);
+            if (findCandidate) {
+                return failure(res, {
+                    message: 'You cannot use the same candidate name for this poll',
+                }, HTTPStatus.BAD_REQUEST);
+            }
             const param = {
                 name, party, pollId, color
             }
@@ -165,5 +174,7 @@ export class UserController {
             }, HTTPStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+
 
 };

@@ -6,6 +6,7 @@ function respond(res, data, httpCode) {
     code: httpCode,
     data: data.response,
     message: data.message,
+    meta: data.meta
   };
   res.setHeader('Content-Type', 'application/json');
   res.setHeader('Access-Control-Allow-Origin', '*');
