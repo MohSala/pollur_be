@@ -74,4 +74,12 @@ export class PollServices {
         return pollModel.findOneAndUpdate({ _id: pollId }, { isDeleted: true }).exec();
     }
 
+    async searchForPolls(query: string) {
+        return pollModel.find({
+            "$text": {
+                "$search": query
+            }
+        }).populate('userId').exec()
+    }
+
 }

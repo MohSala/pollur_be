@@ -239,4 +239,43 @@ export class PollController {
         }
     }
 
+    async searchPoll(req: any, res: any) {
+        const { query } = req.query;
+        let {
+            limit,
+            page,
+        } = req.query;
+
+        limit = parseInt(limit) || 5;
+        page = parseInt(page) || 1;
+        // initialize pagination
+        const paginate = {
+            page: page === 1 ? 0 : page - 1 || 1,
+            limit: limit || 5
+        };
+        if (!query) {
+            return failure(res, {
+                message: "Please provide search param"
+            }, HTTPStatus.BAD_REQUEST)
+        }
+        try {
+            const data = await this.pollService.searchForPolls(query);
+            if (data.length == 0) {
+                return failure(res, {
+                    message: "No Poll Data Found"
+                }, HTTPStatus.NOT_FOUND)
+            }
+            return success(res, {
+                message: `Searched Polls returned Successfully`,
+                response: data,
+
+            }, HTTPStatus.OK);
+        } catch (error) {
+            this.logger.info("Error from searching polls", error)
+            return failure(res, {
+                message: 'Sorry an error occured while searching this polls',
+            }, HTTPStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 }

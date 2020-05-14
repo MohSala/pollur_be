@@ -70,4 +70,9 @@ userRouter.post('/delete',
 		return pollController.removePolls(req, res)
 	})
 
+userRouter.get('/search',
+	(req, res) => {
+		return pollController.searchPoll(req, res)
+	})
+
 

@@ -18,12 +18,14 @@ const pollSchema = new Schema(
         name: {
             type: String,
             required: true,
+            text: true,
             trim: true
         },
         category: {
             type: String,
             required: true,
             trim: true,
+            text: true,
             lowercase: true
         },
         type: {
