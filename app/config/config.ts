@@ -7,7 +7,7 @@ export const config = {
   appName,
   server: {
     url: process.env.APP_URL,
-    port: process.env.APP_PORT
+    port: process.env.PORT //changed from APP_PORT to PORT for deployment sake
   },
   baseUrl: process.env.BASE_URL,
   mongo: {
