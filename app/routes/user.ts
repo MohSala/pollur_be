@@ -75,4 +75,9 @@ userRouter.get('/search',
 		return pollController.searchPoll(req, res)
 	})
 
+userRouter.post('/message',
+	(req, res) => {
+		return userController.takeMessage(req, res)
+	})
+
 

@@ -41,7 +41,7 @@ export class PollServices {
 
     // Count query base on a customize search query
     async countWithSearchQuery() {
-        const count = await pollModel.estimatedDocumentCount()
+        const count = await pollModel.estimatedDocumentCount({ isDeleted: false }).exec();
         return count;
     }
 

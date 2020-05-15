@@ -3,6 +3,7 @@ import { config } from '../config/config'
 
 export interface MessagePayload {
     _id: string;
+    userId: string;
     message: string;
     isDeleted: boolean;
     createdAt: Date;
@@ -11,6 +12,11 @@ export interface MessagePayload {
 
 const messageSchema = new Schema(
     {
+        userId: {
+            type: Types.ObjectId,
+            ref: "users",
+            trim: true
+        },
         message: {
             type: String,
             required: true,

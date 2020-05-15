@@ -76,12 +76,12 @@ export class PollController {
                 status
             } = req.query;
 
-            limit = parseInt(limit) || 5;
+            limit = parseInt(limit) || 10;
             page = parseInt(page) || 1;
             // initialize pagination
             const paginate = {
                 page: page === 1 ? 0 : page - 1 || 1,
-                limit: limit || 5
+                limit: limit || 10
             };
 
             const findAllPolls: Array<object> = await this.pollService.getAllPolls(paginate);

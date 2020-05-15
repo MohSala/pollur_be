@@ -54,10 +54,11 @@ export class UserServices {
         return candidateModel.find({ pollId: id }).exec();
     }
 
-    public async takeMessage(message: MessagePayload) {
+    public async takeMessage(userId: string, message: MessagePayload) {
         const newMessage = new messageModel({
+            userId,
             message
         })
-        return newMessage.save();
+        return newMessage.save().then(result => result.populate("userId", "fullName email mobile").execPopulate());
     }
 };

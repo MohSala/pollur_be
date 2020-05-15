@@ -175,6 +175,26 @@ export class UserController {
         }
     }
 
+    async takeMessage(req: any, res: any) {
+        const { userId, message } = req.body;
+        if (!userId || !message) {
+            return failure(res, {
+                message: 'Please fill in required fields',
+            }, HTTPStatus.BAD_REQUEST);
+        }
+        try {
+            const data: MessagePayload = await this.userService.takeMessage(userId, message);
+            return success(res, {
+                message: `Message Recorded Successfully`,
+                response: data,
+            }, HTTPStatus.OK);
 
+        } catch (error) {
+            this.logger.info("Error Occured while saving your message ", error)
+            return failure(res, {
+                message: 'Sorry an internal server error occured while saving your message',
+            }, HTTPStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
 };
