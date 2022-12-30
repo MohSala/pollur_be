@@ -35,7 +35,7 @@
     "@types/mongoose": "5.7.1",
     "chai": "4.2.0",
     "chai-http": "4.3.0",
-    "mocha": "6.2.2",
+    "mocha": "10.2.0",
     "tslint": "5.20.1",
     "typescript": "3.7.3"
   },
